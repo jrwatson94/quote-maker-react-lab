@@ -1,12 +1,16 @@
 import React from 'react';
+import {connect} from 'react-redux'
+import {removeQuote} from '../actions/quotes'
+
 
 const QuoteCard = (props) =>
+
   <div>
     <div className="card card-inverse card-success card-primary mb-3 text-center">
       <div className="card-block">
         <blockquote className="card-blockquote">
-          {/* <p>{Render Quote Content}</p> */}
-          {/* <footer>- author <cite title="Source Title">{Render Quote Author}</cite></footer> */}
+          {props.content}
+          <footer>- author <cite title="Source Title">{props.author}</cite></footer>
         </blockquote>
       </div>
       <div className="float-right">
@@ -27,12 +31,22 @@ const QuoteCard = (props) =>
             type="button"
             className="btn btn-danger"
           >
-            <span aria-hidden="true">&times;</span>
+            <span onClick={()=>{
+              console.log(props)
+              props.removeQuote(props.id)}} aria-hidden="false">&times;</span>
           </button>
         </div>
-        {/* <div>Votes: {Render Quote Votes}</div> */}
+        <div>Votes: </div>
       </div>
     </div>
   </div>;
 
-export default QuoteCard;
+  
+const mdp = (dispatch) => {
+  return {
+    removeQuote: (id) => {dispatch(removeQuote(id))}
+  }
+}
+
+
+export default connect(null,mdp)(QuoteCard);
